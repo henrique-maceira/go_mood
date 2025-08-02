@@ -2,31 +2,45 @@ import React, { useState } from 'react';
 import { Suggestion, UserPreferences } from '@/types';
 import PreferencesForm from '@/components/PreferencesForm';
 import SuggestionsList from '@/components/SuggestionsList';
-import { generateMockSuggestions } from '@/utils/mockData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MapPin } from 'lucide-react';
+import { buscarSugestoes } from '@/api';
+
 const Index = () => {
   const [currentStep, setCurrentStep] = useState<'form' | 'results'>('form');
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [preferences, setPreferences] = useState<UserPreferences | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const handlePreferencesSubmit = async (userPreferences: UserPreferences) => {
     setIsLoading(true);
     setPreferences(userPreferences);
+    setError(null);
 
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    const mockSuggestions = generateMockSuggestions(userPreferences);
-    setSuggestions(mockSuggestions);
-    setCurrentStep('results');
+    try {
+      // buscarSugestoes agora retorna diretamente Suggestion[]
+      const sugestoes: Suggestion[] = await buscarSugestoes(userPreferences);
+
+      setSuggestions(sugestoes);
+      setCurrentStep('results');
+    } catch (err) {
+      console.error('Erro ao buscar sugestões:', err);
+      setError('Não foi possível buscar sugestões no momento. Tente novamente.');
+    }
+
     setIsLoading(false);
   };
+
   const handleBackToForm = () => {
     setCurrentStep('form');
     setSuggestions([]);
     setPreferences(null);
+    setError(null);
   };
-  return <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-6xl mx-auto px-4 py-4">
@@ -36,33 +50,47 @@ const Index = () => {
                 <MapPin className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">GoMood</h1>
-                <p className="text-sm text-gray-500">Seu humor decide. A gente mostra o lugar!</p>
+                <h1 className="font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  GoMood
+                </h1>
+                <p className="text-sm text-gray-500">Seu humor decide. A gente mostra o lugar!</p>
               </div>
             </div>
-            {currentStep === 'results' && <Button variant="outline" onClick={handleBackToForm} className="flex items-center gap-2">
+            {currentStep === 'results' && (
+              <Button variant="outline" onClick={handleBackToForm} className="flex items-center gap-2">
                 <ArrowLeft className="w-4 h-4" />
                 Nova busca
-              </Button>}
+              </Button>
+            )}
           </div>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {currentStep === 'form' && <div className="space-y-8">
+        {currentStep === 'form' && (
+          <div className="space-y-8">
             <div className="text-center space-y-4">
-              <h2 className="text-4xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-bold">Descubra seu próximo rolê! 🎉</h2>
+              <h2 className="text-4xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-bold">
+                Descubra seu próximo rolê! 🎉
+              </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Conte suas preferências e vamos sugerir os melhores lugares e eventos 
+                Conte suas preferências e vamos sugerir os melhores lugares e eventos
                 da sua região, personalizados especialmente para você.
               </p>
             </div>
-            
-            <PreferencesForm onSubmit={handlePreferencesSubmit} isLoading={isLoading} />
-          </div>}
 
-        {currentStep === 'results' && <SuggestionsList suggestions={suggestions} preferences={preferences} />}
+            <PreferencesForm onSubmit={handlePreferencesSubmit} isLoading={isLoading} />
+
+            {error && (
+              <div className="text-red-600 text-sm text-center">{error}</div>
+            )}
+          </div>
+        )}
+
+        {currentStep === 'results' && (
+          <SuggestionsList suggestions={suggestions} preferences={preferences} />
+        )}
       </div>
 
       {/* Footer */}
@@ -73,6 +101,8 @@ const Index = () => {
           </p>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;

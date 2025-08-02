@@ -1,12 +1,6 @@
-export interface UserPreferences {
-  budget: string;
-  maxTravelTime: number;
-  tipoRole: ActivityType;
-  location?: string;
-  openNow?: boolean;
-}
+// src/types.ts
 
-export type ActivityType = 
+export type ActivityType =
   | 'familia' 
   | 'casal' 
   | 'fitness' 
@@ -21,21 +15,6 @@ export interface ActivityTypeDetails {
   color: string;
   categories: string[];
   description: string;
-}
-
-export interface Suggestion {
-  id: string;
-  name: string;
-  category: string;
-  distance: string;
-  travelTime: string;
-  estimatedCost: string;
-  rating: number | null;
-  description: string;
-  reason: string;
-  link?: string;
-  image?: string | null;
-  tags: string[];
 }
 
 export const ActivityTypes: Record<ActivityType, ActivityTypeDetails> = {
@@ -89,3 +68,26 @@ export const ActivityTypes: Record<ActivityType, ActivityTypeDetails> = {
     description: 'Momentos de paz e tranquilidade'
   },
 };
+
+export interface UserPreferences {
+  budget: string;
+  maxTravelTime: number;
+  tipoRole: ActivityType;
+  location?: string;
+  openNow?: boolean;
+}
+
+export interface Suggestion {
+  id: string;
+  name: string;
+  category: string;
+  distance: string;
+  travelTime: string;
+  estimatedCost: string;
+  rating: number | null;
+  description: string;
+  reason: string;
+  link?: string;
+  image?: string | null;
+  tags: string[];
+}

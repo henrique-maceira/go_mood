@@ -1,73 +1,157 @@
-# Welcome to your Lovable project
+# GoMood - Seu Rolê Personalizado 🎉
 
-## Project info
+Um sistema inteligente que combina geolocalização, API do Google Places e GPT para sugerir os melhores lugares de entretenimento baseado nas suas preferências.
 
-**URL**: https://lovable.dev/projects/c93af02f-fd18-4bbc-a1c2-b4d744f1cf67
+## ✨ Funcionalidades
 
-## How can I edit this code?
+- **Geolocalização automática** - Detecta sua localização atual
+- **Busca inteligente** - Encontra locais com avaliação > 4.8
+- **Categorias expandidas** - Restaurantes, teatros, cinemas, museus, parques, etc.
+- **Análise com GPT** - Classifica locais baseado nas suas preferências
+- **Filtros personalizados** - Orçamento, distância, tipo de evento
+- **Interface moderna** - Design responsivo e intuitivo
 
-There are several ways of editing your application.
+## 🚀 Como usar
 
-**Use Lovable**
+### 1. Configuração das APIs
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c93af02f-fd18-4bbc-a1c2-b4d744f1cf67) and start prompting.
+#### Google Maps API
+1. Acesse [Google Cloud Console](https://console.cloud.google.com/)
+2. Crie um novo projeto ou selecione um existente
+3. Ative as seguintes APIs:
+   - Places API
+   - Geocoding API
+   - Maps JavaScript API
+4. Crie uma chave de API
+5. Configure restrições de domínio para segurança
 
-Changes made via Lovable will be committed automatically to this repo.
+#### OpenAI API
+1. Acesse [OpenAI Platform](https://platform.openai.com/)
+2. Crie uma conta ou faça login
+3. Gere uma chave de API
+4. Configure limites de uso conforme necessário
 
-**Use your preferred IDE**
+### 2. Configuração do Projeto
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+#### Backend
+```bash
+cd backend
+npm install
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Crie um arquivo `.env` baseado no `env.example`:
+```env
+GOOGLE_API_KEY=sua_chave_api_do_google_aqui
+OPENAI_API_KEY=sua_chave_api_da_openai_aqui
+```
 
-Follow these steps:
+#### Frontend
+```bash
+cd rola-ai-sugest_v1
+npm install
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 3. Executando o Projeto
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+#### Backend
+```bash
+cd backend
+npm start
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+#### Frontend
+```bash
+cd rola-ai-sugest_v1
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Acesse `http://localhost:5173` no seu navegador.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🎯 Como funciona
 
-**Use GitHub Codespaces**
+1. **Localização**: O usuário permite acesso à geolocalização ou insere um endereço
+2. **Busca**: O sistema busca locais próximos usando a API do Google Places
+3. **Filtros**: Aplica filtros de avaliação (> 4.8) e categorias relevantes
+4. **Análise**: Envia comentários dos locais para o GPT analisar
+5. **Classificação**: GPT classifica cada local como "Ideal", "Aceitável" ou "Não Ideal"
+6. **Resultados**: Exibe sugestões personalizadas com justificativas
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📱 Tipos de Rolê Suportados
 
-## What technologies are used for this project?
+- 👨‍👩‍👧‍👦 **Família** - Parques, museus, aquários, zoológicos
+- 💕 **Casal** - Restaurantes, cinemas, galerias de arte, spas
+- 💪 **Fitness** - Parques, academias, lojas de bicicletas
+- 🎉 **Amigos** - Bares, casas noturnas, boliches, parques de diversão
+- 🎭 **Cultura** - Museus, galerias de arte, teatros, bibliotecas
+- 🏔️ **Aventura** - Parques, pontos turísticos, aquários
+- 🧘‍♀️ **Relaxamento** - Spas, parques, salões de beleza
 
-This project is built with:
+## 🛠️ Tecnologias
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: Node.js + Express
+- **APIs**: Google Places, OpenAI GPT-4
+- **UI**: Tailwind CSS + Shadcn/ui
+- **Geolocalização**: Browser Geolocation API
 
-## How can I deploy this project?
+## 📊 Estrutura do Projeto
 
-Simply open [Lovable](https://lovable.dev/projects/c93af02f-fd18-4bbc-a1c2-b4d744f1cf67) and click on Share -> Publish.
+```
+go_mood/
+├── backend/                 # Servidor Node.js
+│   ├── index.js            # Servidor principal
+│   ├── package.json        # Dependências do backend
+│   └── env.example         # Exemplo de variáveis de ambiente
+└── rola-ai-sugest_v1/      # Frontend React
+    ├── src/
+    │   ├── components/     # Componentes React
+    │   ├── pages/          # Páginas da aplicação
+    │   ├── types/          # Definições TypeScript
+    │   └── api.js          # Funções de API
+    └── package.json        # Dependências do frontend
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 🔧 Configurações Avançadas
 
-Yes, you can!
+### Personalizar Categorias
+Edite o arquivo `backend/index.js` para adicionar ou remover categorias de entretenimento.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Ajustar Filtros
+Modifique os critérios de filtragem no backend:
+- Avaliação mínima (atualmente 4.8)
+- Raio de busca
+- Número máximo de resultados
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Customizar Análise GPT
+Ajuste o prompt no backend para personalizar como o GPT analisa os locais.
+
+## 🚨 Limitações e Considerações
+
+- **Rate Limits**: Respeite os limites das APIs do Google e OpenAI
+- **Custos**: APIs podem gerar custos dependendo do uso
+- **Precisão**: Geolocalização depende da precisão do dispositivo
+- **Disponibilidade**: Alguns locais podem não ter comentários suficientes
+
+## 🤝 Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+## 🆘 Suporte
+
+Se encontrar problemas:
+1. Verifique se as APIs estão configuradas corretamente
+2. Confirme se as variáveis de ambiente estão definidas
+3. Verifique os logs do console para erros
+4. Abra uma issue no repositório
+
+---
+
+Desenvolvido com ❤️ para ajudar você a descobrir experiências incríveis!
