@@ -2,18 +2,26 @@
   "name": "go-mood",
   "version": "1.0.0",
   "description": "Sistema inteligente de sugestões de entretenimento",
-  "main": "index.js",
+  "main": "backend/index.js",
+  "type": "module",
   "scripts": {
     "install-all": "npm install && cd backend && npm install && cd ../rola-ai-sugest_v1 && npm install",
+    "postinstall": "cd backend && npm install",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm start",
     "dev:frontend": "cd rola-ai-sugest_v1 && npm run dev",
     "build": "cd rola-ai-sugest_v1 && npm run build",
-    "start": "cd backend && npm start"
+    "start": "node backend/index.js"
   },
   "keywords": ["entretenimento", "geolocalização", "google-places", "gpt", "react"],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2"
   }

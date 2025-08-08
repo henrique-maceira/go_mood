@@ -649,6 +649,6 @@ app.get("/api/test", async (req, res) => {
   }
 });
 
-app.listen(3000, () =>
+app.listen(process.env.PORT || 3000, () =>
   console.log("🚀 Backend rodando em http://localhost:3000")
 );
