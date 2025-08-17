@@ -1,0 +1,11 @@
+[33mcommit 6150a5ff57812c32468440f40438e1fce8a44a26[m
+Author: Henrique Maceira <68976827+henrique-maceira@users.noreply.github.com>
+Date:   Sat Aug 16 18:16:04 2025 -0300
+
+    Configuração para deploy: adiciona variáveis de ambiente e vercel.json
+
+backend/.env
+rola-ai-sugest_v1
+src/api.ts
+src/vite-env.d.ts
+vercel.json

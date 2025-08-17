@@ -30,6 +30,9 @@ interface BackendResponse {
   }>;
 }
 
+// Configuração da URL da API baseada no ambiente
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 // Função para obter localização do usuário
 export async function getUserLocation(): Promise<LocationData> {
   return new Promise((resolve, reject) => {
@@ -44,7 +47,7 @@ export async function getUserLocation(): Promise<LocationData> {
           const { latitude, longitude } = position.coords;
           
           // Enviar coordenadas para o backend para obter endereço
-          const response = await fetch("http://localhost:3000/api/geolocation", {
+          const response = await fetch(`${API_BASE_URL}/api/geolocation`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -82,7 +85,7 @@ export async function getUserLocation(): Promise<LocationData> {
 }
 
 export async function buscarSugestoes(preferences: UserPreferences): Promise<Suggestion[]> {
-  const response = await fetch("http://localhost:3000/api/sugestoes", {
+  const response = await fetch(`${API_BASE_URL}/api/sugestoes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
